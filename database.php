@@ -51,7 +51,7 @@
 // }
 ?> -->
 
-// postgre
+
 <?php
 class Database
 {
