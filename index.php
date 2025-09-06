@@ -1,6 +1,14 @@
 <?php
-	$Write="<?php $" . "UIDresult=''; " . "echo $" . "UIDresult;" . " ?>";
-	file_put_contents('UIDContainer.php',$Write);
+$file_path = '/tmp/UIDContainer.php';
+$write = "<?php \$UIDresult=''; echo \$UIDresult; ?>";
+
+if (!file_exists($file_path)) {
+    if (file_put_contents($file_path, $write) === false) {
+        die("Cannot write to temporary folder");
+    }
+}
+
+include $file_path;
 ?>
 
 <!DOCTYPE html> 
