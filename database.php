@@ -85,9 +85,9 @@ class Database
             try {
                 self::loadEnv();
 
-                // PostgreSQL connection
+                // PostgreSQL connection with SSL
                 self::$cont = new PDO(
-                    "pgsql:host=" . self::$dbHost . ";port=5432;dbname=" . self::$dbName,
+                    "pgsql:host=" . self::$dbHost . ";port=5432;dbname=" . self::$dbName . ";sslmode=require",
                     self::$dbUsername,
                     self::$dbUserPassword
                 );
@@ -105,3 +105,4 @@ class Database
     }
 }
 ?>
+
