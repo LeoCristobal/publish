@@ -1,4 +1,4 @@
-<!-- <?php
+//<?php
 // class Database
 // {
 //     private static $dbName;
@@ -49,7 +49,7 @@
 //         self::$cont = null;
 //     }
 // }
-?> -->
+//?> 
 
 
 <?php
@@ -69,7 +69,6 @@ class Database
     private static function loadEnv()
     {
         if (!self::$dbName) {
-            // Read .env file
             $env = parse_ini_file(__DIR__ . '/.env');
 
             self::$dbName         = $env['DB_DATABASE'];
@@ -85,9 +84,10 @@ class Database
             try {
                 self::loadEnv();
 
-                // PostgreSQL connection with SSL
                 self::$cont = new PDO(
-                    "pgsql:host=" . self::$dbHost . ";port=5432;dbname=" . self::$dbName . ";sslmode=require",
+                    "pgsql:host=" . self::$dbHost .
+                    ";port=5432;dbname=" . self::$dbName .
+                    ";sslmode=require",
                     self::$dbUsername,
                     self::$dbUserPassword
                 );
@@ -105,4 +105,3 @@ class Database
     }
 }
 ?>
-
