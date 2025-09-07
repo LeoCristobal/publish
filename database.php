@@ -1,4 +1,4 @@
-<-- <?php
+// <?php
 // class Database
 // {
 //     private static $dbName;
@@ -49,7 +49,7 @@
 //         self::$cont = null;
 //     }
 // }
- ?> -->
+// ?> 
 
 
 <?php
