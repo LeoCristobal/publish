@@ -32,7 +32,7 @@
 -- -- Sample log entry
 -- INSERT INTO access_log (user_id, rfid_id, action) VALUES (1, '39EAB06D', 'login');
 
-// postgre
+--postgre
 
 -- Drop tables if they exist
 DROP TABLE IF EXISTS access_log;
