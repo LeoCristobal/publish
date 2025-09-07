@@ -55,10 +55,6 @@
 <?php
 class Database
 {
-    private static $dbName = null;
-    private static $dbHost = null;
-    private static $dbUsername = null;
-    private static $dbUserPassword = null;
     private static $cont  = null;
 
     public function __construct() {
@@ -67,30 +63,27 @@ class Database
 
     public static function connect()
     {
-        // Load from Render environment variables
-        self::$dbName         = getenv("DB_DATABASE") ?: 'research_574b';
-        self::$dbHost         = getenv("DB_HOST") ?: 'dpg-d2tuekre5dus73e71p0g-a.oregon-postgres.render.com';
-        self::$dbUsername     = getenv("DB_USERNAME") ?: 'research_574b_user';
-        self::$dbUserPassword = getenv("DB_PASSWORD") ?: 'mP9MhGx9FLmOWU3Xkf7w8JtXDIsqv5Rw';
-
         if (null == self::$cont)
         {     
             try
             {
+                $dbUrl = getenv('DATABASE_URL');
+                $dbopts = parse_url($dbUrl);
+
+                $host = $dbopts['host'];
+                $port = isset($dbopts['port']) ? $dbopts['port'] : 5432;
+                $user = $dbopts['user'];
+                $pass = $dbopts['pass'];
+                $dbname = ltrim($dbopts['path'], '/');
+
+                $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require";
                 $options = [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_TIMEOUT => 5,          // 5-second timeout
+                    PDO::ATTR_TIMEOUT => 5,
                     PDO::ATTR_EMULATE_PREPARES => false
                 ];
 
-                self::$cont = new PDO(
-                    "pgsql:host=".self::$dbHost.
-                    ";port=5432;dbname=".self::$dbName.
-                    ";sslmode=require",
-                    self::$dbUsername,
-                    self::$dbUserPassword,
-                    $options
-                ); 
+                self::$cont = new PDO($dsn, $user, $pass, $options); 
 
             }
             catch(PDOException $e)
@@ -107,3 +100,4 @@ class Database
     }
 }
 ?>
+
